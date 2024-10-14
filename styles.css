@@ -7,7 +7,11 @@ html{
 h3{
     text-align: center;
 }
-.screen{
+body{
+    display: flex;
+    flex-direction: column;
+}
+#screen{
     border-radius: 12px;
     background-color: pink;
     padding: 10px;
@@ -23,7 +27,20 @@ h3{
     align-items: center;
     gap: 6px;
 }
-.click{
+#extraButtons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+}
+
+#extraButtons button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 20px;
+}
+button{
     display: flex;
     width: 60px;
     height: 60px;
