@@ -9,7 +9,6 @@ const button6 = document.getElementById("button6");
 const button7 = document.getElementById("button7");
 const button8 = document.getElementById("button8");
 const button9 = document.getElementById("button9");
-const buttonDel = document.getElementById("buttonDel");
 const buttonAc = document.getElementById("buttonAc");
 const buttonPer = document.getElementById("buttonPer");
 const buttonX = document.getElementById("buttonX");
@@ -76,12 +75,6 @@ calculator.addEventListener("click", function(event){
         console.log(tempNumber);
         screen.textContent = tempNumber;
     }
-    });
-
-buttonDel.addEventListener("click", function(){
-        tempNumber = tempNumber.substring(0, tempNumber.length - 1);
-        console.log(tempNumber);
-        screen.textContent = tempNumber; 
     });
 
 buttonAc.addEventListener("click", () =>{
