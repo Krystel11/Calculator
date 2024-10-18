@@ -1,15 +1,6 @@
 const button = document.getElementsByTagName("button");
-const button0 = document.getElementById("button0");
-const button1 = document.getElementById("button1");
-const button2 = document.getElementById("button2");
-const button3 = document.getElementById("button3");
-const button4 = document.getElementById("button4");
-const button5 = document.getElementById("button5");
-const button6 = document.getElementById("button6");
-const button7 = document.getElementById("button7");
-const button8 = document.getElementById("button8");
-const button9 = document.getElementById("button9");
 const buttonAc = document.getElementById("buttonAc");
+const buttonDel = document.getElementById("buttonDel");
 const buttonPer = document.getElementById("buttonPer");
 const buttonX = document.getElementById("buttonX");
 const buttonDiv = document.getElementById("buttonDiv");
@@ -18,16 +9,18 @@ const buttonMul = document.getElementById("buttonMul");
 const buttonPoint = document.getElementById("buttonPoint");
 const resultButton = document.getElementById("resultButton");
 const calculator = document.getElementById("calculator");
+const operatorButtons = document.getElementById("operatorButtons");
 const screen = document.getElementById("screen");
+const numbers = document.getElementById("numbers");
 
-let number1;
-let number2;
-let operator="";
-let array = [];
+let number1 = "";
+let number2 = "";
+let operator= "";
 let tempNumber = "";
-let num5 = "";
-let myOperator;
+let result;
+let array = [];
 
+//Function for the operations
 function add(num1, num2){
     return num1+num2;
 }
@@ -43,71 +36,100 @@ function divide(num1,num2){
     }
     return num1/num2;
 }
-//Step 3 function operate
-function operate(num1, operator, num2) {
-    let result;
+//Function to operate according to the entered operator
+function operate(number1, operator, number2) {
+    let num1 = parseFloat(number1);
+    let num2 = parseFloat(number2);
     switch(operator){
         case "+":
-            result = add(num1, num2);
-            break;
+            return add(num1, num2);
         case "-":
-            result = subtract(num1, num2);
-            break;
+            return subtract(num1, num2);
         case "X":
-            result = multiply(num1, num2);
-            break;
+            return multiply(num1, num2);
         case "/":
-            result = divide(num1, num2);
-            break;
+            return divide(num1, num2);
         case "%":
-            result = percentage(num1, num2);
-            break;
+            return num1 * (num2/100);
         default:
-            result = "ERROR. Invalid operator";
-    }
-    screen.textContent = result;  
+            return "ERROR. Invalid operator";
+    }  
 }
-
-calculator.addEventListener("click", function(event){ 
-    if(event.target.tagName === "BUTTON"){
-        num5 = event.target.value;
-        tempNumber += num5; 
-        console.log(tempNumber);
-        screen.textContent = tempNumber;
+//Capture the clicked buttons
+numbers.addEventListener("click", function(event){
+    if(event.target.tagName === 'BUTTON'){ 
+        let value = event.target.value; 
+        if (!isNaN(value)) { 
+            tempNumber = value; 
+        if(screen.textContent === "0"){
+            screen.textContent = tempNumber; 
+        }else {
+            screen.textContent += tempNumber;
+        }
+    }else {
+        operator = value;
+        screen.textContent  += " "+operator+" ";
+        }
     }
     });
+    
+/*numbers.addEventListener("click", function(event){
+    const operatorOptions = /[X+\-\/%]/;
+    if(operatorOptions.test(event.target.value)){
+        operator = event.target.value;
+        screen.textContent = tempNumber +' '+operator;
+        if(number1 === null){
+            number1 = parseFloat(tempNumber);
+            tempNumber = "";
+        }else if(number1 !== null && tempNumber !== ""){
+            number2 = parseFloat(tempNumber);
+            result = operate(number1, operator, number2);
+            screen.textContent = number1+' '+operator+' '+number2;
+            number1 = result;
+            tempNumber = "";
+        } 
+    }
+});*/
 
-buttonAc.addEventListener("click", () =>{
+buttonDel.addEventListener("click", () => {
+    if(screen.textContent.length === 1){
+        screen.textContent = "0";
+        number1 = "";
+        number2 = "";
+        operator= "";
+        tempNumber = "";
+        result= "";
+        array = [];
+    }else{
+        screen.textContent = screen.textContent.slice(0, -1);
+    }
+});
+
+buttonAc.addEventListener("click", () => {
+    screen.textContent = "0";
+    number1 = "";
+    number2 = "";
+    operator= "";
     tempNumber = "";
-    num5 = "";
-    number1 = 0;
-    operator = "";
-    number2 = 0;
+    result= "";
     array = [];
-    screen.textContent = 0;
- });
+});
+resultButton.addEventListener("click", () =>{
+    let operation = screen.textContent;
+    const operatorOptions =  /[X+\-\/]/;
+    myOperator = operation.match(operatorOptions);
+    operator = myOperator ? myOperator.toString():'';
+    array = operation.split(operatorOptions);
+    number1 = array[0];
+    number2= array[1];
+    result = operate(number1, operator, number2);
+    screen.textContent = result;
+})
  /*buttonPer.addEventListener("click", () =>{
     let numPercentage = Number(tempNumber) / 10;
     console.log(numPercentage);
     screen.textContent = numPercentage;
  });*/
-
- resultButton.addEventListener("click", function (){
-    const operatorOptions =  /[X+\-\/]/;
-    myOperator = tempNumber.match(operatorOptions);
-    operator = myOperator ? myOperator.toString():'';
-    array = tempNumber.split(operatorOptions);
-    number1 = Number(array[0]);
-    number2= Number(array[1]);
-    operate(number1, operator, number2);
-    });
-
-
-
-
-
-
-
 
 
 

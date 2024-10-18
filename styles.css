@@ -1,46 +1,52 @@
-html{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+
+* {
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
 }
 h3{
-    text-align: center;
+    font-size: 35px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: white;
+    font-weight: bold;
 }
 body{
-    display: flex;
-    flex-direction: column;
+    min-height: 100vh;
+    background: rgb(255, 106, 0);
+    display: grid;
+    place-items: center;
 }
-#screen{
-    border-radius: 12px;
-    background-color: pink;
-    padding: 10px;
-    margin-bottom: 8px;
-    text-align: end;
+#container{
+    background-color: rgb(95, 47, 12);
+    max-width: 100%;
+    width: 400px;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    gap: 1rem;
 }
-#calculator{
-    display:flex;
-    height: 60vh;
-    width: 60vh;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-}
-#extraButtons {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 10px;
+#numbers, #operatorButtons, .extraButtons{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
 }
 
-#extraButtons button {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    font-size: 20px;
+#screen{
+    font-size: 2rem;
+    color: white;
+    grid-column: 1 /-1;
+    text-align: right;
+    padding: 1.5rem;
+    font-family: monospace;
+    font-weight: 450;
+}
+button:hover{
+    background-color: orangered;
 }
 button{
+    background-color: rgb(230, 142, 79);
+    color: solid black;
+    font-weight: bold;
     display: flex;
     width: 60px;
     height: 60px;
