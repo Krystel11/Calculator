@@ -33,8 +33,9 @@ function multiply(num1,num2){
 function divide(num1,num2){
     if (num2 === 0){
         return "ERROR. Cannot divide by zero";
+    }else{
+        return num1/num2;
     }
-    return num1/num2;
 }
 //Function to operate according to the entered operator
 function operate(number1, operator, number2) {
@@ -123,8 +124,15 @@ resultButton.addEventListener("click", () =>{
     number1 = array[0];
     number2= array[1];
     result = operate(number1, operator, number2);
-    screen.textContent = result;
-})
+
+    if(typeof result === "string"){
+        screen.textContent = result;
+    }else if(Number.isInteger(result)){
+        screen.textContent = result;
+    }else{
+        screen.textContent = result.toFixed(2);
+    } 
+});
  /*buttonPer.addEventListener("click", () =>{
     let numPercentage = Number(tempNumber) / 10;
     console.log(numPercentage);
