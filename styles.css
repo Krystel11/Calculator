@@ -7,9 +7,14 @@
 }
 h3{
     font-size: 35px;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: cursive;
     color: white;
     font-weight: bold;
+    color: #fff; 
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 
+                 0 0 15px rgba(255, 255, 255, 0.6),
+                 0 0 20px rgba(255, 255, 255, 0.4);
+    animation: glow 1.5s infinite alternate;
 }
 body{
     min-height: 100vh;
@@ -25,12 +30,14 @@ body{
     border-radius: 1rem;
     gap: 1rem;
 }
-#numbers, #operatorButtons, .extraButtons{
+#numbers, #extraButtons{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
 }
-
+#extraButtons{
+    margin-top: 1rem;
+}
 #screen{
     font-size: 2rem;
     color: white;

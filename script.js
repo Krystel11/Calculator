@@ -30,6 +30,9 @@ function subtract(num1, num2){
 function multiply(num1,num2){
     return num1*num2;
 }
+function percentage(num1, num2){
+    return (num1 * (num2/100));
+}
 function divide(num1,num2){
     if (num2 === 0){
         return "ERROR. Cannot divide by zero";
@@ -51,7 +54,7 @@ function operate(number1, operator, number2) {
         case "/":
             return divide(num1, num2);
         case "%":
-            return num1 * (num2/100);
+            return percentage(num1, num2);
         default:
             return "ERROR. Invalid operator";
     }  
@@ -67,7 +70,7 @@ numbers.addEventListener("click", function(event){
         }else {
             screen.textContent += tempNumber;
         }
-    }else {
+    }else{
         operator = value;
         screen.textContent  += " "+operator+" ";
         }
@@ -92,6 +95,7 @@ numbers.addEventListener("click", function(event){
     }
 });*/
 
+//Del button: delete the last value
 buttonDel.addEventListener("click", () => {
     if(screen.textContent.length === 1){
         screen.textContent = "0";
@@ -106,6 +110,7 @@ buttonDel.addEventListener("click", () => {
     }
 });
 
+//Ac button: delete all
 buttonAc.addEventListener("click", () => {
     screen.textContent = "0";
     number1 = "";
@@ -115,11 +120,20 @@ buttonAc.addEventListener("click", () => {
     result= "";
     array = [];
 });
+
+//Result button setting 
 resultButton.addEventListener("click", () =>{
     let operation = screen.textContent;
     const operatorOptions =  /[X+\-\/]/;
-    myOperator = operation.match(operatorOptions);
-    operator = myOperator ? myOperator.toString():'';
+    const percentageButton = /[%]/;
+    let myOperator = "";
+
+    if (operation.match(percentageButton)){
+        myOperator = "%";
+    }else{
+        myOperator = operation.match(operatorOptions); //This is an array
+    }
+    operator = myOperator ? myOperator.toString() : ''; //overwriting a variable :/ and convert myOperator to a variable string
     array = operation.split(operatorOptions);
     number1 = array[0];
     number2= array[1];
@@ -133,11 +147,7 @@ resultButton.addEventListener("click", () =>{
         screen.textContent = result.toFixed(2);
     } 
 });
- /*buttonPer.addEventListener("click", () =>{
-    let numPercentage = Number(tempNumber) / 10;
-    console.log(numPercentage);
-    screen.textContent = numPercentage;
- });*/
+
 
 
 
