@@ -1,56 +1,59 @@
 
 * {
-    margin:0;
+    margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: sans-serif;
 }
-h3{
+
+h3 {
     font-size: 35px;
     font-family: cursive;
     color: white;
     font-weight: bold;
-    color: #fff; 
     text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 
                  0 0 15px rgba(255, 255, 255, 0.6),
                  0 0 20px rgba(255, 255, 255, 0.4);
     animation: glow 1.5s infinite alternate;
 }
-body{
+
+body {
     min-height: 100vh;
     background: rgb(255, 106, 0);
     display: grid;
     place-items: center;
 }
-#container{
+
+#container {
     background-color: rgb(95, 47, 12);
-    max-width: 100%;
+    max-width: 100%; 
     width: 400px;
     padding: 1.5rem;
     border-radius: 1rem;
-    gap: 1rem;
+    gap: 1rem; 
 }
-#numbers, #extraButtons{
+
+#numbers, #operatorButtons, #extraButtons {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 1rem; 
 }
-#extraButtons{
-    margin-top: 1rem;
-}
-#screen{
+
+#screen {
     font-size: 2rem;
     color: white;
-    grid-column: 1 /-1;
+    grid-column: 1 / -1;
     text-align: right;
     padding: 1.5rem;
     font-family: monospace;
     font-weight: 450;
+    background: rgba(0, 0, 0, 0.2); 
+    border-radius: 5px;
 }
-button:hover{
-    background-color: orangered;
+button.double {
+    grid-column: span 2; 
 }
-button{
+button {
     background-color: rgb(230, 142, 79);
     color: solid black;
     font-weight: bold;
@@ -63,4 +66,7 @@ button{
     font-size: 20px;
     justify-content: center;
     align-items: center;
+}
+button:hover {
+    background-color: orangered;
 }

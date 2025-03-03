@@ -16,9 +16,7 @@ const numbers = document.getElementById("numbers");
 let number1 = "";
 let number2 = "";
 let operator= "";
-let tempNumber = "";
-let result;
-let array = [];
+let result="";
 
 //Function for the operations
 function add(num1, num2){
@@ -29,9 +27,6 @@ function subtract(num1, num2){
 }
 function multiply(num1,num2){
     return num1*num2;
-}
-function percentage(num1, num2){
-    return (num1 * (num2/100));
 }
 function divide(num1,num2){
     if (num2 === 0){
@@ -59,41 +54,84 @@ function operate(number1, operator, number2) {
             return "ERROR. Invalid operator";
     }  
 }
-//Capture the clicked buttons
-numbers.addEventListener("click", function(event){
-    if(event.target.tagName === 'BUTTON'){ 
-        let value = event.target.value; 
-        if (!isNaN(value)) { 
-            tempNumber = value; 
-        if(screen.textContent === "0"){
-            screen.textContent = tempNumber; 
-        }else {
-            screen.textContent += tempNumber;
-        }
-    }else{
-        operator = value;
-        screen.textContent  += " "+operator+" ";
+
+// Capture the numbers event
+numbers.addEventListener("click", function (event) {
+    if (event.target.tagName === "BUTTON") {
+        const value = event.target.value;
+        if (operator) {
+            if (screen.textContent === number1) {
+                screen.textContent = value;
+            } else {
+                screen.textContent += value; 
+            }
+           number2 = screen.textContent; 
+        } else {
+            if (screen.textContent === "0") {
+                screen.textContent = value; 
+            } else {
+                screen.textContent += value; 
+            }
+            number1 = screen.textContent; 
         }
     }
-    });
-    
-/*numbers.addEventListener("click", function(event){
-    const operatorOptions = /[X+\-\/%]/;
-    if(operatorOptions.test(event.target.value)){
-        operator = event.target.value;
-        screen.textContent = tempNumber +' '+operator;
-        if(number1 === null){
-            number1 = parseFloat(tempNumber);
-            tempNumber = "";
-        }else if(number1 !== null && tempNumber !== ""){
-            number2 = parseFloat(tempNumber);
-            result = operate(number1, operator, number2);
-            screen.textContent = number1+' '+operator+' '+number2;
-            number1 = result;
-            tempNumber = "";
-        } 
+});
+
+// Capture the clicked operator
+operatorButtons.addEventListener("click", function (event) {
+    if (event.target.tagName === "BUTTON") {
+        const valueOperator = event.target.value;
+        if (number1 && operator && number2) {
+            result = operate(number1, operator, number2); 
+            screen.textContent = result; 
+            number1 = result.toString(); 
+            number2 = "";
+        }
+        operator = valueOperator;
+        console.log(`selected operator: ${operator}`);
     }
-});*/
+});
+
+// Button Percentage
+buttonPer.addEventListener("click", () => {
+    if (operator) {  
+        // operation with percentage (200 + 10%)
+        if (number1 && number2) {
+            number2 = (parseFloat(number1) * (parseFloat(number2) / 100)).toString();
+            result = operate(number1, operator, number2); 
+            screen.textContent = Number.isInteger(result) ? result : result.toFixed(2);
+            number1 = result.toString(); 
+            number2 = "";
+            operator = "";
+        }
+    } else {  
+        // Converts an integer to decimal (50% -> 0.5)
+        if (number1) {
+            number1 = (parseFloat(number1) / 100).toString();
+            screen.textContent = Number.isInteger(parseFloat(number1)) ? number1 : parseFloat(number1).toFixed(2);
+        }
+    }
+});
+
+// Result button setting
+resultButton.addEventListener("click", () => {
+    console.log(number1);
+    console.log(operator);
+    console.log(number2);
+    if (number1 && operator && number2) {
+        result = operate(number1, operator, number2);
+       if(typeof result === "string"){
+        screen.textContent = result;
+       }else if (Number.isInteger(result)){
+        screen.textContent = result.toFixed(2);
+       }else{
+        screen.textContent = result;
+       }
+        number1 = result.toString(); 
+        number2 = "";
+        operator = ""; 
+    }
+});
 
 //Del button: delete the last value
 buttonDel.addEventListener("click", () => {
@@ -104,7 +142,6 @@ buttonDel.addEventListener("click", () => {
         operator= "";
         tempNumber = "";
         result= "";
-        array = [];
     }else{
         screen.textContent = screen.textContent.slice(0, -1);
     }
@@ -118,35 +155,8 @@ buttonAc.addEventListener("click", () => {
     operator= "";
     tempNumber = "";
     result= "";
-    array = [];
 });
 
-//Result button setting 
-resultButton.addEventListener("click", () =>{
-    let operation = screen.textContent;
-    const operatorOptions =  /[X+\-\/]/;
-    const percentageButton = /[%]/;
-    let myOperator = "";
-
-    if (operation.match(percentageButton)){
-        myOperator = "%";
-    }else{
-        myOperator = operation.match(operatorOptions); //This is an array
-    }
-    operator = myOperator ? myOperator.toString() : ''; //overwriting a variable :/ and convert myOperator to a variable string
-    array = operation.split(operatorOptions);
-    number1 = array[0];
-    number2= array[1];
-    result = operate(number1, operator, number2);
-
-    if(typeof result === "string"){
-        screen.textContent = result;
-    }else if(Number.isInteger(result)){
-        screen.textContent = result;
-    }else{
-        screen.textContent = result.toFixed(2);
-    } 
-});
 
 
 
