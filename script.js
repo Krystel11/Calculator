@@ -54,20 +54,21 @@ numbers.addEventListener("click", function (event) {
     if (event.target.tagName === "BUTTON") {
         const value = event.target.value;
         if (screen.textContent.length >= MAX_SCREEN_LENGTH) return; 
-        if (operator) {
-            if (screen.textContent === number1) {
+       
+        if (operator){
+            if(!number2 ||  screen.textContent === number1){
                 screen.textContent = value;
-            } else {
+            } else{
                 screen.textContent += value;
             }
             number2 = screen.textContent;
         } else {
-            if (screen.textContent === "0") {
+            if ( screen.textContent === "0" ||  screen.textContent === result.toString){
                 screen.textContent = value;
-            } else {
+            } else{
                 screen.textContent += value;
             }
-            number1 = screen.textContent;
+            number1 =  screen.textContent;
         }
     }
 });
@@ -84,11 +85,6 @@ operatorButtons.addEventListener("click", function (event) {
             number2 = "";
         }
         operator = valueOperator;
-        if (number1 && !number2) {
-            screen.textContent = number1;
-        } else {
-            screen.textContent = "0";
-        }
     }
 });
 
@@ -113,7 +109,17 @@ buttonPer.addEventListener("click", () => {
 resultButton.addEventListener("click", () => {
     if (operator && number2) {
         result = operate(parseFloat(number1), operator, parseFloat(number2));
-        screen.textContent = result === "ERROR. Cannot divide by zero" ? result : result.toFixed(2);
+        switch(true){
+            case typeof result === "string":
+                screen.textContent = result;
+                break;
+            case Number.isInteger(result):
+                screen.textContent = result;
+                break;
+            case !Number.isInteger(result):
+                screen.textContent = result.toFixed(2);
+                break;
+        }
         number1 = result;
         number2 = "";
         operator = "";
@@ -124,13 +130,22 @@ resultButton.addEventListener("click", () => {
 buttonDel.addEventListener("click", () => {
     if (screen.textContent.length === 1) {
         screen.textContent = "0";
-        number1 = "";
-        number2 = "";
-        operator = "";
-        result = "";
+        if (number2) {
+            number2 = "";
+        } else {
+            number1 = "";
+            operator = "";
+            result = "";
+        }
     } else {
         screen.textContent = screen.textContent.slice(0, -1);
+        if (operator) {
+            number2 = screen.textContent;
+        } else {
+            number1 = screen.textContent;
+        }
     }
+    
 });
 
 // Ac button: delete all
@@ -144,18 +159,17 @@ buttonAc.addEventListener("click", () => {
 
 // Button Point
 buttonPoint.addEventListener("click", () => {
-  if (screen.textContent.includes(".")) return;
-  if (operator && screen.textContent === number1) {
-      screen.textContent = "0.";
-      number2 = "0.";
-  } else if (!screen.textContent.includes(".")) {
-      screen.textContent += ".";
-      if (operator) {
-          number2 = screen.textContent;
-      } else {
-          number1 = screen.textContent;
-      }
-  }
+    if (operator) {
+        if (!number2.includes(".")) {
+            number2 = number2 ? number2 + "." : "0.";
+            screen.textContent = number2;
+        }
+    } else {
+        if (!number1.includes(".")) {
+            number1 = number1 ? number1 + "." : "0.";
+            screen.textContent = number1;
+        }
+    }
 });
 
 
